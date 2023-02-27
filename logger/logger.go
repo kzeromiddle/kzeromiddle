@@ -1,5 +1,6 @@
 package logger
 
+//////////////////////////////////////////////////
 import (
 	"fmt"
 	"log"
@@ -7,12 +8,12 @@ import (
 	"time"
 )
 
+//////////////////////////////////////////////////
 const (
-	// FILE : set logger file
 	FILE = 0
 )
 
-// Logger : Logger block
+//////////////////////////////////////////////////
 type Logger struct {
 	fileName  string
 	Prefix    string
@@ -21,7 +22,7 @@ type Logger struct {
 	logFD     *os.File
 }
 
-// InitStandardLogger : 표준 로거 설정
+//////////////////////////////////////////////////
 func (l *Logger) InitStandardLogger(logType uint) {
 	if logType == 0 {
 		if l.Directory == "" {
@@ -43,9 +44,10 @@ func (l *Logger) InitStandardLogger(logType uint) {
 		}()
 	}
 	time.Sleep(time.Second * 1)
-	log.Println("================= Logger Start ==================")
+	log.Println("==============================")
 }
 
+//////////////////////////////////////////////////
 func (l *Logger) logLotate() {
 	var err error
 	tmFormat := "20060102"
@@ -58,7 +60,6 @@ func (l *Logger) logLotate() {
 		if l.logFD != nil {
 			l.logFD.Close()
 		}
-		log.Println("Make to new log file")
 		l.fileName = fmt.Sprintf("%s/%s-%s.log", l.Directory, l.Prefix, timeDate)
 		l.logFD, err = os.OpenFile(l.fileName, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 		l.Date = &timeDate
